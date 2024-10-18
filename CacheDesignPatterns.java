@@ -1,6 +1,6 @@
 import java.util.*;
 
-// Cache interface (Prototype pattern)
+// Prototype pattern
 interface CacheDesignPatterns extends Cloneable {
     void put(String key, int value);
     int get(String key);
@@ -10,7 +10,7 @@ interface CacheDesignPatterns extends Cloneable {
     boolean containsKey(String key);
     CacheDesignPatterns clone();  
 
-// Concrete cache implementing FIFO with Prototype and Singleton
+// Prototype and Singleton
 class FifoCache implements CacheDesignPatterns {
     private static FifoCache instance;  // Singleton instance
 
@@ -86,7 +86,7 @@ class FifoCache implements CacheDesignPatterns {
     }
 }
 
-// Cache Builder (Builder Pattern)
+// Builder Pattern
 class CacheBuilder {
     private int capacity;
     private String evictionPolicy;
@@ -106,17 +106,15 @@ class CacheBuilder {
         if (evictionPolicy.equalsIgnoreCase("FIFO")) {
             return FifoCache.getInstance(capacity);
         }
-        // Add other eviction policies like LRU, LFU here
         throw new IllegalArgumentException("Unsupported eviction policy");
     }
 }
 
-// Abstract Factory for creating caches
+// Abstract Factory
 abstract class CacheFactory {
     public abstract CacheDesignPatterns createCache();
 }
 
-// Concrete Factory for creating FIFO cache
 class FifoCacheFactory extends CacheFactory {
     private final int capacity;
 
@@ -129,11 +127,9 @@ class FifoCacheFactory extends CacheFactory {
         return FifoCache.getInstance(capacity);
     }
 }
-
-// Example usage
+// usage
 public class CacheSystem {
     public static void main(String[] args) {
-        // Use builder pattern to configure cache
         CacheDesignPatterns cache = new CacheBuilder()
                 .setCapacity(3)
                 .setEvictionPolicy("FIFO")
@@ -150,13 +146,13 @@ public class CacheSystem {
         System.out.println(cache.get("a"));  // Output: -1
         System.out.println(cache.get("b"));  // Output: 2
 
-        // Use Prototype pattern to clone the cache
+        // Prototype pattern to clone the cache
         CacheDesignPatterns clonedCache = cache.clone();
         clonedCache.put("e", 5);
         System.out.println(clonedCache.get("b"));  // Output: 2
         System.out.println(clonedCache.get("e"));  // Output: 5
 
-        // Use Factory pattern to create cache
+        // Factory pattern to create cache
         CacheFactory factory = new FifoCacheFactory(3);
         CacheDesignPatterns factoryCache = factory.createCache();
         factoryCache.put("x", 10);
