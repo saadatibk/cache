@@ -18,14 +18,12 @@ class FifoCache implements CacheDesignPatterns {
     private final Queue<String> keys;
     private final int capacity;
 
-    // Private constructor for Singleton
     private FifoCache(int capacity) {
         this.cache = new HashMap<>();
         this.keys = new LinkedList<>();
         this.capacity = capacity;
     }
 
-    // Singleton getInstance method
     public static FifoCache getInstance(int capacity) {
         if (instance == null) {
             instance = new FifoCache(capacity);
