@@ -157,6 +157,7 @@ public class CacheSystem {
         System.out.println(factoryCache.get("x"));  // Output: 10
     }
 }
+
 }
 
 
